@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile Payment System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+      max-width: 400px;
+      margin: auto;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .balance {
+      font-size: 1.5em;
+      text-align: center;
+      margin: 20px 0;
+      color: green;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      margin: 10px 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      margin-top: 10px;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button.cashout {
+      background: #dc3545;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Bkash Pay_Pal </h2>
+    <div class="balance">Balance: $<span id="balance">0.00</span></div>
+
+    <input type="number" id="amount" placeholder="Enter amount" min="1" />
+
+    <button onclick="addMoney()">Add Money</button>
+    <button class="cashout" onclick="cashOut()">Cash Out</button>
+  </div>
+
+  <script>
+    let balance = 0;
+
+    function updateDisplay() {
+      document.getElementById('balance').innerText = balance.toFixed(2);
+    }
+
+    function getAmount() {
+      const amountInput = document.getElementById('amount');
+      const amount = parseFloat(amountInput.value);
+      if (isNaN(amount) || amount <= 0) {
+        alert("Please enter a valid amount.");
+        return null;
+      }
+      return amount;
+    }
+
+    function addMoney() {
+      const amount = getAmount();
+      if (amount !== null) {
+        balance += amount;
+        updateDisplay();
+        document.getElementById('amount').value = '';
+      }
+    }
+
+    function cashOut() {
+      const amount = getAmount();
+      if (amount !== null) {
+        if (amount > balance) {
+          alert("Insufficient balance.");
+        } else {
+          balance -= amount;
+          updateDisplay();
+          document.getElementById('amount').value = '';
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
